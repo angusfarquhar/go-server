@@ -9,11 +9,19 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	_, err := fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
-	//
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	err := http.ListenAndServe(":8080", nil)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
